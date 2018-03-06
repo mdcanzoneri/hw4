@@ -71,7 +71,8 @@ export default class App extends React.Component {
       locationName: response.location,
       currentTemperature: Math.round(response.weather.currently.temperature),
       currentSummary: response.weather.currently.summary,
-      currentIcon: response.weather.currently.icon
+      currentIcon: response.weather.currently.icon,
+      forecast: response.weather.daily.data.splice(0,5)
     });
   }
 
@@ -82,6 +83,14 @@ export default class App extends React.Component {
     //    currentTemperature, currentSummary)
     // 3. Forecast (forecastDay, forecastIcon, forecastTemperature)
     let forecast = []; // this will eventually hold the JSX elements for each day
+      for (var i = 0; i < this.state.forecast.length; i++) {
+        forecast.push(
+          <View style={styles.forecastDay} key={i}>
+            <Text style={styles.forecastIcon}><Icon size={20} name={icon(this.state.forecast[i].icon)} /></Text>
+            <Text style={styles.forecastTemperature}>{Math.round(this.state.forecast[i].temperatureHigh)}</Text>
+          </View>
+        )
+      }
 
     return (
       <View style={styles.container}>
